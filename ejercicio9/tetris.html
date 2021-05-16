@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+   <title>Tetris</title>
+   <link rel="stylesheet" href="tetris.css">
+   <script src="tetris.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="column" >
+            <div class = "colum"><canvas id="canvas" width="300" height="600"></canvas></div>
+        </div>
+        <div class="column" style="background-color:#bbb;">
+            <div class = "row">
+                <label>Score: </label><label id = "score"> 0 </label>
+                <label>Lines: </label><label id = "lines"> 0 </label>
+                <label>Level: </label><label id = "level"> 1 </label>
+            </div>
+            <div class = "row">
+                <label id ="pause" hidden style="color: red;font-size: xx-large;">Juego en Pause </label>
+            </div>
+            <div class = "row">
+                <div style="margin-top: 1cm;"><label >Next Piece</label></div>
+                <div class = "colum" style="margin-top: 0.2cm;margin-left: 0.5cm;"><canvas id="next" width="120" height="60"></canvas></div>
+            </div>
+            <div class = "row">
+                <table id = "scores">
+                </table>
+            </div>
+        </div>
+      </div>
+
+    <div class="row">
+
+
+    <audio class="audio" loop id="music">
+        <source src="efectosSonido/02_A-Type Music (version 1.1).mp3" type="audio/mp3">
+    </audio>
+    <audio class="audio" id="rotate">
+        <source src="efectosSonido/block-rotate.mp3" type="audio/mp3">
+    </audio>
+    <audio class="audio" id="clear">
+        <source src="efectosSonido/clear.wav" type="audio/wav">
+    </audio> 
+    <audio class="audio" id="hardDown">
+        <source src="efectosSonido/force-hit.mp3" type="audio/mp3">
+    </audio>
+    <audio class="audio" id="slowDown">
+        <source src="efectosSonido/slow-hit.mp3" type="audio/mp3">
+    </audio>
+    <audio class="audio" id="pauseSound">
+        <source src="efectosSonido/pause.mp3" type="audio/mp3">
+    </audio>
+    <audio class="audio" id="move">
+        <source src="efectosSonido/move.mp3" type="audio/mp3">
+    </audio> 
+    <audio class="audio" id="line"> 
+        <source src="efectosSonido/line.wav" type="audio/wav">
+    </audio> 
+        
+    </div>
+    
+
+<script>
+// ===== main ====
+// canvas related variables
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+// clear the canvas
+ctx.fillStyle = 'white';
+ctx.fillRect(0,0,canvas.width,canvas.height); 
+
+var canvasNext = document.getElementById("next");
+var ctxNext = canvasNext.getContext("2d");
+
+// clear the canvas
+ctxNext.fillStyle = '#bbb';
+ctxNext.fillRect(0,0,canvas.width,canvas.height); 
+
+var game = new Tetris();
+game.init();
+
+//ajustamos los volumenes
+
+function adjustAudio(val) {
+    Array.from(document.getElementsByClassName("audio")).forEach(element => {
+        element.volume = val *4
+    }); 
+    document.getElementById("music").volume = val ;
+}
+adjustAudio(0.03)
+document.getElementById("music").play();
+
+game.updateRecords();
+
+
+</script>
+</body>
+</html>
